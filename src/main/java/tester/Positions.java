@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public class Positions {
@@ -46,12 +47,14 @@ public static void setList(List<position> alist){
 
         for (int j = 0; j < i; j++) {
             local++;
+            int local2 = 0;
             if (local == sizeOfDataWindow){
                 a.sendKeys(Keys.PAGE_DOWN);
                 a.sendKeys(Keys.PAGE_DOWN);
             local =1;
+            local2++;
             }
-            System.out.println("local");
+            System.out.println(local);
             System.out.println(j);
 
 
@@ -61,11 +64,29 @@ public static void setList(List<position> alist){
             if (!removingDoubleQuotations(acell.getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
                 System.out.println("The id is not where expected, checking rest of page");
                 seeker = false;
-                int t;
-                for (t = 1; t < sizeOfDataWindow; t++) {
-                    if (removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + t + "]/td[3]")).getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
+
+                int t, local3;
+
+
+                for(local3=local2;local3>0;local3--){
+                    a.sendKeys(Keys.PAGE_UP);
+                    a.sendKeys(Keys.PAGE_UP);
+
+                }
+                int local4 =0;
+
+                for (t = 0; t < i; t++) {
+                    local3++;
+                    if (local3 == sizeOfDataWindow){
+                        a.sendKeys(Keys.PAGE_DOWN);
+                        a.sendKeys(Keys.PAGE_DOWN);
+                        local3 =1;
+                        local4++;
+                    }
+                    if (removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[3]")).getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
 
                         seeker = true;
+
                         break;
                     }
 
@@ -75,13 +96,24 @@ public static void setList(List<position> alist){
                     System.out.println(mypositions.get(j).getPositionId() + "could not be found on page");
 
                 } else {
-                    if (Byte.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + t + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId()) &&
-                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + t + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName())
-                            && adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + t + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency())
-                            && Double.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + t + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId())) {
+                    if (Byte.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId()) &&
+                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName())
+                            && adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency())
+                            && Double.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId())) {
                         System.out.println("found on line" + t + ", full object match");
 
                     }
+                }
+
+                while(local4>0){
+                    a.sendKeys(Keys.PAGE_UP);
+                    a.sendKeys(Keys.PAGE_UP);
+                    local4--;
+                }
+
+                for(local3 = local2;local3 >0; local3--){
+                    a.sendKeys(Keys.PAGE_DOWN);
+                    a.sendKeys(Keys.PAGE_DOWN);
                 }
             } else {
                 if (Byte.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId()) &&
