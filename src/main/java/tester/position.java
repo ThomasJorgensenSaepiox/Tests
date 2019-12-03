@@ -3,7 +3,7 @@ package tester;
 import org.apache.commons.lang3.StringUtils;
 
 public class position {
-    private double PortfolioId;
+    private String PortfolioId;
     private String PositionId;
     private String PositionName;
     private Double PositionNominal = Double.NaN;
@@ -32,11 +32,11 @@ public class position {
     private String Hedgeable;
 
 
-    public double getPortfolioId() {
+    public String getPortfolioId() {
         return PortfolioId;
     }
 
-    public void setPortfolioId(double portfolioId) {
+    public void setPortfolioId(String portfolioId) {
         PortfolioId = portfolioId;
     }
 
