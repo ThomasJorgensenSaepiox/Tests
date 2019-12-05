@@ -21,9 +21,9 @@ public class Positions {
 
     private static List<position> mypositions = new LinkedList<position>();
 
-public static void setList(List<position> alist){
-    mypositions = alist;
-}
+    public static void setList(List<position> alist) {
+        mypositions = alist;
+    }
 
     public static void Test(WebDriver adriver) throws InterruptedException {
 
@@ -35,103 +35,89 @@ public static void setList(List<position> alist){
 
         int i = mypositions.size();
         int sizeOfDataWindow = 1;
-        int local=0;
+        int local = 0;
 
-        wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr["+sizeOfDataWindow+"]/td[2]")));
-        while ((adriver.findElements(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr["+sizeOfDataWindow+"]/td[2]")).size() > 0) ){
+        wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + sizeOfDataWindow + "]/td[2]")));
+        while ((adriver.findElements(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + sizeOfDataWindow + "]/td[2]")).size() > 0)) {
             sizeOfDataWindow++;
         }
-      System.out.println(sizeOfDataWindow);
+        System.out.println(sizeOfDataWindow);
 
         WebElement a = adriver.findElement(By.xpath("//div[@id='Positions-Grid']/div/div/div/div[3]/div"));
 
         for (int j = 0; j < i; j++) {
-            local++;
-            int local2 = 0;
-            if (local == sizeOfDataWindow){
-                a.sendKeys(Keys.PAGE_DOWN);
-                a.sendKeys(Keys.PAGE_DOWN);
-            local =1;
-            local2++;
-            }
-            System.out.println(local);
-            System.out.println(j);
 
+            local = 0;
+            Boolean seeker = false;
+            for (int t = 0; t < i; t++) {
+                local++;
 
-            WebElement acell = adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[3]"));
-            Boolean seeker = true;
-
-            if (!removingDoubleQuotations(acell.getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
-                System.out.println("The id is not where expected, checking rest of page");
-                seeker = false;
-
-                int t, local3;
-
-
-                for(local3=local2;local3>0;local3--){
-                    a.sendKeys(Keys.PAGE_UP);
-                    a.sendKeys(Keys.PAGE_UP);
+                if (local == sizeOfDataWindow) {
+                    a.sendKeys(Keys.PAGE_DOWN);
+                    a.sendKeys(Keys.PAGE_DOWN);
+                    local = 1;
 
                 }
-                int local4 =0;
 
-                for (t = 0; t < i; t++) {
-                    local3++;
-                    if (local3 == sizeOfDataWindow){
-                        a.sendKeys(Keys.PAGE_DOWN);
-                        a.sendKeys(Keys.PAGE_DOWN);
-                        local3 =1;
-                        local4++;
+
+                if (removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[3]")).getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
+                    System.out.println("Id match, checking remaining data");
+                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText().equalsIgnoreCase(mypositions.get(j).getPortfolioId())) {
+                        System.out.println("portfolioid");
                     }
-                    if (removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[3]")).getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
+
+                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName())) {
+                        System.out.println("position name");
+                    }
+                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency())) {
+                        System.out.println("currency");
+                    }
+                    System.out.println(mypositions.get(j).getBasCurrency() + " " + adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText());
+                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText().equalsIgnoreCase(mypositions.get(j).getBasCurrency())) {
+
+                        System.out.println("base");
+                        // System.out.println("found on line" + t + ", full object match");
 
                         seeker = true;
-
                         break;
                     }
 
 
                 }
-                if (!seeker) {
-                    System.out.println(mypositions.get(j).getPositionId() + "could not be found on page");
 
-                } else {
-                    if (Byte.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId()) &&
-                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName())
-                            && adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency())
-                            && Double.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local3 + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId())) {
-                        System.out.println("found on line" + t + ", full object match");
 
-                    }
-                }
+            }
+            if (!seeker) {
+                System.out.println(mypositions.get(j).getPositionId() + "could not be found on page");
+            }
+            for (int y = 0; y < i / sizeOfDataWindow; y++) {
+                a.sendKeys(Keys.PAGE_UP);
+                a.sendKeys(Keys.PAGE_UP);
 
-                while(local4>0){
-                    a.sendKeys(Keys.PAGE_UP);
-                    a.sendKeys(Keys.PAGE_UP);
-                    local4--;
-                }
-
-                for(local3 = local2;local3 >0; local3--){
-                    a.sendKeys(Keys.PAGE_DOWN);
-                    a.sendKeys(Keys.PAGE_DOWN);
-                }
-            } else {
-                if (Byte.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId()) &&
-                        adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName())
-                        && adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency())
-                        && Double.valueOf(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText()).equals(mypositions.get(j).getPortfolioId())) {
-                    System.out.println("found where expected, full match between position and data");
-                } else {
-                    System.out.println("hmm");
-                }
             }
         }
 
-    }
-        private static String removingDoubleQuotations (String aNumber3){
-            return aNumber3.replaceAll("\"", "").trim().replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;").replace(",", "");
-
-        }
-
 
     }
+
+    private static String removingDoubleQuotations(String aNumber3) {
+        return aNumber3.replaceAll("\"", "").trim().replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;").replace(",", "");
+
+    }
+
+    static public void uploadTestPositions(WebDriver adriver) {
+        adriver.manage().window().setPosition(new Point(-1000, 0));
+        adriver.manage().window().maximize();
+        adriver.navigate().to(testingVariablesPile.getHost() + "#!positions-admin");
+        WebDriverWait wait = new WebDriverWait(adriver, 10);
+        adriver.navigate().to(testingVariablesPile.getHost() + "#!positions-admin");//
+        adriver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[1]/div[1]/span[2]/span[2]")).click();
+        adriver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/span[6]/span")).click();
+        wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"upload_3\"]/div[2]/div")));
+        adriver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/div[3]/div/div/div[1]/div[1]/div[2]/input")).sendKeys("xl test (excel_sheet)" + Keys.ENTER);
+        WebElement e = adriver.findElement(By.id("upload file button"));
+        e.click();
+        e.sendKeys("C:\\Users\\exist\\Serenity 58 ApS\\Saepions - Documents\\SaepioX Share\\11 Test\\Data\\20191202 Positions.xlsx");
+
+    }
+}

@@ -1,6 +1,7 @@
 package tester;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
@@ -148,7 +149,7 @@ public class importTestExcel{
                                         break;
                                     case 2:
                                             if (cell.getCellType() == CellType.STRING) {
-                                            aposition.setName(cell.getStringCellValue());
+                                            aposition.setPositionName(cell.getStringCellValue());
                                         }
                                         break;
                                     case 3:
@@ -211,11 +212,14 @@ public class importTestExcel{
                                         if (cell.getCellType() == CellType.STRING) {
                                                                                   aposition.setBasCurrency(cell.getStringCellValue());
                                         }
+
+
                                         break;
                                     case 12:
                                            if (cell.getCellType() == CellType.STRING) {
                                         aposition.setExpBas(cell.getStringCellValue());
                                         }
+
                                         break;
                                     case 13:
 
