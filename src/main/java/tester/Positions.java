@@ -72,13 +72,25 @@ public class Positions {
                     if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency())) {
                         System.out.println("currency");
                     }
-                    System.out.println(mypositions.get(j).getBasCurrency() + " " + adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText());
+                    if (Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[7]")).getText())).equals(mypositions.get(j).getPositionNominal())){
+                        System.out.println("Nominal");
+                    }
+                 //   System.out.println(Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[8]")).getText()))+""+mypositions.get(j).getWeightedExposureValueExpCCY());
+                    if (Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[8]")).getText())).equals(mypositions.get(j).getWeightedExposureValueExpCCY())){
+                        System.out.println("exposed");
+                    }
+
+                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[10]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionGroup())) {
+                        System.out.println("group");
+                    }
+
+
                     if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText().equalsIgnoreCase(mypositions.get(j).getBasCurrency())) {
 
                         System.out.println("base");
                         // System.out.println("found on line" + t + ", full object match");
 
-                        seeker = true;
+                    //    seeker = true;
                         break;
                     }
 

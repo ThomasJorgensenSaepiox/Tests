@@ -77,7 +77,7 @@ public class position {
     }
 
     public void setPositionGroup(String positionGroup) {
-
+    PositionGroup=positionGroup;
 
     }
 
