@@ -54,51 +54,31 @@ public class Positions {
 
                 if (local == sizeOfDataWindow) {
                     a.sendKeys(Keys.PAGE_DOWN);
-                    a.sendKeys(Keys.PAGE_DOWN);
+
                     local = 1;
 
                 }
 
 
                 if (removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[3]")).getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
-                    System.out.println("Id match, checking remaining data");
-                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText().equalsIgnoreCase(mypositions.get(j).getPortfolioId())) {
-                        System.out.println("portfolioid");
-                    }
 
-                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName())) {
-                        System.out.println("position name");
-                    }
-                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency())) {
-                        System.out.println("currency");
-                    }
-                    if (Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[7]")).getText())).equals(mypositions.get(j).getPositionNominal())){
-                        System.out.println("Nominal");
-                    }
-                 //   System.out.println(Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[8]")).getText()))+""+mypositions.get(j).getWeightedExposureValueExpCCY());
-                    if (Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[8]")).getText())).equals(mypositions.get(j).getWeightedExposureValueExpCCY())){
-                        System.out.println("exposed");
-                    }
-
-                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[10]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionGroup())) {
-                        System.out.println("group");
-                    }
-
-
-                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText().equalsIgnoreCase(mypositions.get(j).getBasCurrency())) {
-
-                        System.out.println("base");
-                        // System.out.println("found on line" + t + ", full object match");
-
-                    //    seeker = true;
+                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText().equalsIgnoreCase(mypositions.get(j).getPortfolioId()) &&
+                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName()) &&
+                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency()) &&
+                            Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[7]")).getText())).equals(Double.valueOf(mypositions.get(j).getWeightedExposureValueExpCCY())) &&
+                            Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[8]")).getText())).equals(Double.valueOf(removingDoubleQuotations(mypositions.get(j).getExpBas()))) &&
+                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[10]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionGroup()) &&
+                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText().equalsIgnoreCase(mypositions.get(j).getBasCurrency())) {
+                        System.out.println("found on line" + t + ", full object match");
+                        seeker = true;
                         break;
                     }
-
 
                 }
 
 
             }
+
             if (!seeker) {
                 System.out.println(mypositions.get(j).getPositionId() + "could not be found on page");
             }

@@ -5,14 +5,16 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.seleniumhq.jetty9.util.StringUtil;
 
-import java.io.File;
-import java.io.IOException;
+import javax.print.DocFlavor;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
-
+import java.time.LocalDate;
 /*
 this does a minimalist import from an excel file into a list of objects, then verifies this against import into the page.
 
@@ -92,6 +94,60 @@ public class importTestExcel {
         return positions;
     }
 
+    public static void maturityDateUpdatingForTestingDoNotUseOnProductionData(File afile) throws IOException {
+
+        if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
+            System.out.println("yes, no, pull the other one, it has bells on it. this needs to be an excelsheet");
+        } else {
+            AtomicInteger i = new AtomicInteger(), j = new AtomicInteger(), u = new AtomicInteger();
+            AtomicLong daysOffset = new AtomicLong(-3);
+            AtomicBoolean d = new AtomicBoolean();
+            FileInputStream dataImport= new FileInputStream(afile);
+            Workbook anImportofPositions = WorkbookFactory.create(dataImport);
+            FormulaEvaluator evaluator = anImportofPositions.getCreationHelper().createFormulaEvaluator();
+            anImportofPositions.forEach(sheet -> {
+                i.set(0);
+
+                sheet.forEach(row -> {
+                    i.getAndIncrement();
+                    d.set(false);
+                    row.forEach(cell -> {
+                        if (i.get() == 1 && cell.getCellType() == CellType.STRING) {
+                            if (cell.getStringCellValue().equalsIgnoreCase("maturity")) {
+                                j.set(cell.getColumnIndex());
+                            }
+                            if (cell.getStringCellValue().equalsIgnoreCase("InstrumentType")||cell.getStringCellValue().equalsIgnoreCase("positiontype")) {
+                                u.set(cell.getColumnIndex());
+                                System.out.println("hedge ");
+                            }}
+                        if (i.get()>1){
+                        if(cell.getColumnIndex()==u.get()){
+                           if(cell.getStringCellValue().equalsIgnoreCase("hedge")){
+
+                               d.set(true);
+                           }}
+
+                        }
+                        if(cell.getColumnIndex()==j.get()&&d.get()) {
+                            System.out.println(LocalDate.now());
+                            System.out.println(LocalDate.now().plusDays(daysOffset.getAndIncrement()));
+                            cell.setCellValue(LocalDate.now().plusDays(daysOffset.getAndIncrement()).toString());
+
+                        }
+
+                    });
+
+                });
+            });
+            dataImport.close();
+           FileOutputStream fileout = new FileOutputStream(afile);
+            anImportofPositions.write(fileout);
+            anImportofPositions.close();
+            fileout.flush();
+            fileout.close();
+        }
+
+    }
     public static List<position> positionstobeloaded_excell(File afile) throws IOException {
         List<position> positions = new LinkedList<position>();
 
@@ -171,11 +227,9 @@ public class importTestExcel {
                                     if (cell.getCellType() == CellType.STRING) {
 
                                         aposition.setMaturity(cell.getStringCellValue());
-                                    }
-                                    else if (cell.getCellType() == CellType.BLANK){
+                                    } else if (cell.getCellType() == CellType.BLANK) {
                                         aposition.setMaturity("99991212");
-                                    }
-                                    else if (cell.getCellType() == CellType.NUMERIC){
+                                    } else if (cell.getCellType() == CellType.NUMERIC) {
                                         aposition.setMaturity(String.valueOf(cell.getNumericCellValue()));
                                     }
 
@@ -185,7 +239,7 @@ public class importTestExcel {
                                     if (cell.getCellType() == CellType.STRING) {
                                         aposition.setAllocation(cell.getStringCellValue());
                                     }
-                                    System.out.println(cell.getStringCellValue());
+
                                     break;
                                 case 7:
 
@@ -203,10 +257,10 @@ public class importTestExcel {
 
                                     if (cell.getCellType() == CellType.NUMERIC) {
                                         aposition.setPositionNominal(cell.getNumericCellValue());
-                                    System.out.println("nominal:" + cell.getNumericCellValue());
+
                                     } else if (cell.getCellType() == CellType.STRING) {
-                                        System.out.println("nominal:" +cell.getStringCellValue());
-                                                aposition.setPositionNominal(Double.valueOf(removingDoubleQuotations(cell.getStringCellValue())));
+
+                                        aposition.setPositionNominal(Double.valueOf(removingDoubleQuotations(cell.getStringCellValue())));
                                     } else {
                                         logicOr1.set(false);
                                     }
@@ -214,26 +268,26 @@ public class importTestExcel {
                                 case 9:
                                     if (cell.getCellType() == CellType.STRING) {
                                         aposition.setWeightedExposureValueExpCCY(cell.getStringCellValue());
-                                        System.out.println("string:"+cell.getStringCellValue());
+
                                     } else if (cell.getCellType() == CellType.NUMERIC) {
                                         aposition.setWeightedExposureValueExpCCY(String.valueOf(cell.getNumericCellValue()));
-                                        System.out.println("numeric:"+String.valueOf(cell.getNumericCellValue()));
+
                                     } else if (cell.getCellType() == CellType.FORMULA) {
                                         if (evaluator.evaluate(cell).getCellType() == CellType.STRING) {
                                             aposition.setWeightedExposureValueExpCCY(evaluator.evaluate(cell).getStringValue());
-                                            System.out.println(evaluator.evaluate(cell).getStringValue());
+
                                         } else {
                                             aposition.setWeightedExposureValueExpCCY(String.valueOf(evaluator.evaluate(cell).getNumberValue()));
+
+
                                         }
-
-
                                     } else {
                                         logicOr2.set(false);
                                     }
 
                                     break;
-                                case 10:
-                                    //    System.out.println(cell.getCellType());
+                                case 11:
+
                                     if (cell.getCellType() == CellType.STRING) {
                                         aposition.setBasCurrency(cell.getStringCellValue());
                                     }
@@ -241,19 +295,29 @@ public class importTestExcel {
                                     if (cell.getCellType() == CellType.FORMULA) {
                                         if (evaluator.evaluate(cell).getCellType() == CellType.STRING) {
                                             aposition.setBasCurrency(evaluator.evaluate(cell).getStringValue());
+                                        } else if (evaluator.evaluate(cell).getCellType() == CellType.NUMERIC) {
+                                            aposition.setBasCurrency(String.valueOf(evaluator.evaluate(cell).getNumberValue()));
                                         }
+
 
                                     }
                                     break;
-                                case 11:
-                                    if (cell.getCellType() == CellType.STRING) {
-                                        aposition.setName(cell.getStringCellValue());
-                                    }
-                                    break;
+
 
                                 case 12:
                                     if (cell.getCellType() == CellType.STRING) {
                                         aposition.setExpBas(cell.getStringCellValue());
+                                    }
+                                    if (cell.getCellType() == CellType.NUMERIC) {
+                                        aposition.setExpBas(String.valueOf(cell.getNumericCellValue()));
+                                    }
+                                    if (cell.getCellType() == CellType.FORMULA) {
+                                        if (evaluator.evaluate(cell).getCellType() == CellType.STRING) {
+                                            aposition.setExpBas(evaluator.evaluate(cell).getStringValue());
+                                        } else if (evaluator.evaluate(cell).getCellType() == CellType.NUMERIC) {
+                                            aposition.setExpBas(String.valueOf(evaluator.evaluate(cell).getNumberValue()));
+                                        }
+
                                     }
 
                                     break;
@@ -387,7 +451,7 @@ public class importTestExcel {
                                     break;
                                 case 15:
                                     if (cell.getCellType() == CellType.NUMERIC) {
-                                       // aposition.setWeightedExposureValueExpCCY(String.valueOf(cell.getNumericCellValue()));
+                                        // aposition.setWeightedExposureValueExpCCY(String.valueOf(cell.getNumericCellValue()));
                                     }
                                     break;
                                 case 16:
@@ -399,6 +463,7 @@ public class importTestExcel {
                                     if (cell.getCellType() == CellType.STRING) {
                                         aposition.setBasCurrency(cell.getStringCellValue());
                                     }
+
                                     break;
                                 case 18:
                                     if (cell.getCellType() == CellType.NUMERIC) {
@@ -471,4 +536,5 @@ public class importTestExcel {
 
         }
     }
+
 }
