@@ -3,10 +3,12 @@ package tester;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.util.TempFile;
 import org.seleniumhq.jetty9.util.StringUtil;
 
 import javax.print.DocFlavor;
 import java.io.*;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -146,6 +148,55 @@ public class importTestExcel {
             fileout.flush();
             fileout.close();
         }
+
+    }
+    public static File parseExcellFormulas(File afile) throws IOException {
+
+        if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
+            System.out.println("yes, no, pull the other one, it has bells on it. this needs to be an excelsheet");
+        } else {
+            FileInputStream dataImport= new FileInputStream(afile);
+            Workbook anImportofPositions = WorkbookFactory.create(dataImport);
+            FormulaEvaluator evaluator = anImportofPositions.getCreationHelper().createFormulaEvaluator();
+            anImportofPositions.forEach(sheet -> {
+
+
+                sheet.forEach(row -> {
+
+                    row.forEach(cell -> {
+                            if(cell.getCellType()==CellType.FORMULA) {
+                                if (evaluator.evaluate(cell).getCellType() == CellType.STRING) {
+                                    String temporary = evaluator.evaluate(cell).getStringValue();
+                                    cell.setCellValue(temporary);
+                                } else if (evaluator.evaluate(cell).getCellType() == CellType.NUMERIC) {
+                                    Double temp = evaluator.evaluate(cell).getNumberValue();
+                                    cell.setCellValue(temp);
+                                } else if (evaluator.evaluate(cell).getCellType() == CellType.BOOLEAN) {
+                                    Boolean ephemeral = evaluator.evaluate(cell).getBooleanValue();
+                                    cell.setCellValue(ephemeral);
+                                } else if (evaluator.evaluate(cell).getCellType() == CellType.BLANK) {
+
+                                } else if (evaluator.evaluate(cell).getCellType() == CellType.ERROR) {
+                                    System.out.println("ERROR ENCOUNTERED. If you see this text, something is messed up");
+                                }
+                            }
+                        });
+
+                    });
+
+                });
+
+            dataImport.close();
+            File myfile = TempFile.createTempFile("atestFile",".xlsx");
+            FileOutputStream fileout = new FileOutputStream(myfile);
+            anImportofPositions.write(fileout);
+            anImportofPositions.close();
+            fileout.flush();
+            fileout.close();
+            return myfile;
+        }
+return null;
+
 
     }
     public static List<position> positionstobeloaded_excell(File afile) throws IOException {
