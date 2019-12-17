@@ -17,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.time.LocalDate;
+
 /*
 this does a minimalist import from an excel file into a list of objects, then verifies this against import into the page.
 
@@ -104,7 +105,7 @@ public class importTestExcel {
             AtomicInteger i = new AtomicInteger(), j = new AtomicInteger(), u = new AtomicInteger();
             AtomicLong daysOffset = new AtomicLong(-3);
             AtomicBoolean d = new AtomicBoolean();
-            FileInputStream dataImport= new FileInputStream(afile);
+            FileInputStream dataImport = new FileInputStream(afile);
             Workbook anImportofPositions = WorkbookFactory.create(dataImport);
             FormulaEvaluator evaluator = anImportofPositions.getCreationHelper().createFormulaEvaluator();
             anImportofPositions.forEach(sheet -> {
@@ -118,19 +119,21 @@ public class importTestExcel {
                             if (cell.getStringCellValue().equalsIgnoreCase("maturity")) {
                                 j.set(cell.getColumnIndex());
                             }
-                            if (cell.getStringCellValue().equalsIgnoreCase("InstrumentType")||cell.getStringCellValue().equalsIgnoreCase("positiontype")) {
+                            if (cell.getStringCellValue().equalsIgnoreCase("InstrumentType") || cell.getStringCellValue().equalsIgnoreCase("positiontype")) {
                                 u.set(cell.getColumnIndex());
                                 System.out.println("hedge ");
-                            }}
-                        if (i.get()>1){
-                        if(cell.getColumnIndex()==u.get()){
-                           if(cell.getStringCellValue().equalsIgnoreCase("hedge")){
+                            }
+                        }
+                        if (i.get() > 1) {
+                            if (cell.getColumnIndex() == u.get()) {
+                                if (cell.getStringCellValue().equalsIgnoreCase("hedge")) {
 
-                               d.set(true);
-                           }}
+                                    d.set(true);
+                                }
+                            }
 
                         }
-                        if(cell.getColumnIndex()==j.get()&&d.get()) {
+                        if (cell.getColumnIndex() == j.get() && d.get()) {
                             System.out.println(LocalDate.now());
                             System.out.println(LocalDate.now().plusDays(daysOffset.getAndIncrement()));
                             cell.setCellValue(LocalDate.now().plusDays(daysOffset.getAndIncrement()).toString());
@@ -142,7 +145,7 @@ public class importTestExcel {
                 });
             });
             dataImport.close();
-           FileOutputStream fileout = new FileOutputStream(afile);
+            FileOutputStream fileout = new FileOutputStream(afile);
             anImportofPositions.write(fileout);
             anImportofPositions.close();
             fileout.flush();
@@ -150,12 +153,13 @@ public class importTestExcel {
         }
 
     }
+
     public static File parseExcellFormulas(File afile) throws IOException {
 
         if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
             System.out.println("yes, no, pull the other one, it has bells on it. this needs to be an excelsheet");
         } else {
-            FileInputStream dataImport= new FileInputStream(afile);
+            FileInputStream dataImport = new FileInputStream(afile);
             Workbook anImportofPositions = WorkbookFactory.create(dataImport);
             FormulaEvaluator evaluator = anImportofPositions.getCreationHelper().createFormulaEvaluator();
             anImportofPositions.forEach(sheet -> {
@@ -164,30 +168,29 @@ public class importTestExcel {
                 sheet.forEach(row -> {
 
                     row.forEach(cell -> {
-                            if(cell.getCellType()==CellType.FORMULA) {
-                                if (evaluator.evaluate(cell).getCellType() == CellType.STRING) {
-                                    String temporary = evaluator.evaluate(cell).getStringValue();
-                                    cell.setCellValue(temporary);
-                                } else if (evaluator.evaluate(cell).getCellType() == CellType.NUMERIC) {
-                                    Double temp = evaluator.evaluate(cell).getNumberValue();
-                                    cell.setCellValue(temp);
-                                } else if (evaluator.evaluate(cell).getCellType() == CellType.BOOLEAN) {
-                                    Boolean ephemeral = evaluator.evaluate(cell).getBooleanValue();
-                                    cell.setCellValue(ephemeral);
-                                } else if (evaluator.evaluate(cell).getCellType() == CellType.BLANK) {
-
-                                } else if (evaluator.evaluate(cell).getCellType() == CellType.ERROR) {
-                                    System.out.println("ERROR ENCOUNTERED. If you see this text, something is messed up");
-                                }
+                        if (cell.getCellType() == CellType.FORMULA) {
+                            if (evaluator.evaluate(cell).getCellType() == CellType.STRING) {
+                                String temporary = evaluator.evaluate(cell).getStringValue();
+                                cell.setCellValue(temporary);
+                            } else if (evaluator.evaluate(cell).getCellType() == CellType.NUMERIC) {
+                                Double temp = evaluator.evaluate(cell).getNumberValue();
+                                cell.setCellValue(temp);
+                            } else if (evaluator.evaluate(cell).getCellType() == CellType.BOOLEAN) {
+                                Boolean ephemeral = evaluator.evaluate(cell).getBooleanValue();
+                                cell.setCellValue(ephemeral);
+                            } else if (evaluator.evaluate(cell).getCellType() == CellType.BLANK) {
+                            } else if (evaluator.evaluate(cell).getCellType() == CellType.ERROR) {
+                                System.out.println("ERROR ENCOUNTERED. If you see this text, something is messed up");
                             }
-                        });
-
+                        }
                     });
 
                 });
 
+            });
+
             dataImport.close();
-            File myfile = TempFile.createTempFile("atestFile",".xlsx");
+            File myfile = TempFile.createTempFile("atestFile", ".xlsx");
             FileOutputStream fileout = new FileOutputStream(myfile);
             anImportofPositions.write(fileout);
             anImportofPositions.close();
@@ -195,13 +198,13 @@ public class importTestExcel {
             fileout.close();
             return myfile;
         }
-return null;
+        return null;
 
 
     }
+
     public static List<position> positionstobeloaded_excell(File afile) throws IOException {
         List<position> positions = new LinkedList<position>();
-
 
         if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
             System.out.println("yes, no, pull the other one, it has bells on it. this needs to be an excelsheet");

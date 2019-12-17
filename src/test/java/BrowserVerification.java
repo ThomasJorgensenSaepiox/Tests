@@ -20,7 +20,9 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
 public class BrowserVerification {
 private static String host;
 @Before
+
    public void kickoff() {
+    testingVariablesPile.setHost("http://saepioxdemo-env1.gyjqm9fxqx.eu-central-1.elasticbeanstalk.com/");
     host= testingVariablesPile.getHost();
 }
 @Test
@@ -84,6 +86,9 @@ public  void FireFox(){
             driver.navigate().to(host+"#!agreement");
             screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox14.jpg"));
+            driver.navigate().to(host+"#!user-settings");
+            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox14.jpg"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,6 +124,9 @@ public  void FireFox(){
             screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome2.jpg"));
             driver.navigate().to(host+"#!position-change");
+            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome15.jpg"));
+            driver.navigate().to(host+"#!user-settings");
             screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome3.jpg"));
             driver.navigate().to(host+"#!position-change-view-new");

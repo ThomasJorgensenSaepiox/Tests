@@ -1,6 +1,13 @@
 package tester;
 
 public class testingVariablesPile {
+   public enum months3Letter {
+        JAN, FEB,MAR,APR,MAY,JUN,JUL,AUG,SEB,OCT,NOV,DEC
+    }
+    public enum months{JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER
+
+    }
+
     private static String[] list1;
     private static String[] list2;
     private static String[] list3;

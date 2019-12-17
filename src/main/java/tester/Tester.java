@@ -25,7 +25,8 @@ public class Tester {
         testingVariablesPile.setHost(targethost);
 
       try {
-   //Login.admin(driver);
+          Login.admin(driver);
+          UserSettings.dateCheck(driver);
 // Dashboard.setMypositions(importTestExcel.dash(new File("C:\\tests\\testdata\\testdash2.xlsx")));
 // Dashboard.Test(driver);
             // Dashboard.Test(driver);
@@ -39,12 +40,10 @@ public class Tester {
    //GenerateUser.Delete_test_user(driver);
       //Login.charles(driver);
   //  Agreement.createAndDestroyAgreement(driver);
-          importTestExcel.maturityDateUpdatingForTestingDoNotUseOnProductionData(new File("C:\\Users\\exist\\IdeaProjects\\atester\\src\\main\\resources\\20191202 Positions.xlsx"));
+      //    importTestExcel.maturityDateUpdatingForTestingDoNotUseOnProductionData(new File("C:\\Users\\exist\\IdeaProjects\\atester\\src\\main\\resources\\20191202 Positions.xlsx"));
    //     Positions.setMypositions(importTestExcel.positionstobeloaded_excell(new File("C:\\Users\\exist\\IdeaProjects\\atester\\src\\main\\resources\\20191202 Positions.xlsx")));
        // Positions.Test(driver);
-        } catch (IOException e) {
-          e.printStackTrace();
-      } finally {
+        } finally {
            //  driver.quit();
         }
     }
