@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
@@ -25,9 +27,13 @@ public class Tester {
         testingVariablesPile.setHost(targethost);
 
       try {
-          Login.admin(driver);
-          UserSettings.dateCheck(driver);
-// Dashboard.setMypositions(importTestExcel.dash(new File("C:\\tests\\testdata\\testdash2.xlsx")));
+
+         Login.charles(driver);
+         //portfolios.uploadTestPortfolios(driver);
+     //    Positions.uploadTestPositions(driver);
+      //UserSettings.dateCheck(driver);
+          Positions.setMypositions(importTestExcel.positionstobeloaded_excell(new File("C:\\Tests\\20191202 Positions.xlsx")));
+          Positions.Test(driver);
 // Dashboard.Test(driver);
             // Dashboard.Test(driver);
             //  logouttest.logout(driver);
@@ -42,8 +48,10 @@ public class Tester {
   //  Agreement.createAndDestroyAgreement(driver);
       //    importTestExcel.maturityDateUpdatingForTestingDoNotUseOnProductionData(new File("C:\\Users\\exist\\IdeaProjects\\atester\\src\\main\\resources\\20191202 Positions.xlsx"));
    //     Positions.setMypositions(importTestExcel.positionstobeloaded_excell(new File("C:\\Users\\exist\\IdeaProjects\\atester\\src\\main\\resources\\20191202 Positions.xlsx")));
-       // Positions.Test(driver);
-        } finally {
+    //  Positions.uploadTestPositions(driver);
+        } catch (IOException | InterruptedException e) {
+          e.printStackTrace();
+      } finally {
            //  driver.quit();
         }
     }

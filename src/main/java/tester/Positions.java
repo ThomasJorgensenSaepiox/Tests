@@ -5,14 +5,16 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.IOException;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfWindowsToBe;
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class Positions {
     public static void setMypositions(List<position> somePositions) {
@@ -37,13 +39,13 @@ public class Positions {
         int sizeOfDataWindow = 1;
         int local = 0;
 
-        wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + sizeOfDataWindow + "]/td[2]")));
-        while ((adriver.findElements(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + sizeOfDataWindow + "]/td[2]")).size() > 0)) {
+        wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + sizeOfDataWindow + "]/td[2]")));
+        while ((adriver.findElements(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + sizeOfDataWindow + "]/td[2]")).size() > 0)) {
             sizeOfDataWindow++;
         }
         System.out.println(sizeOfDataWindow);
 
-        WebElement a = adriver.findElement(By.xpath("//div[@id='Positions-Grid']/div/div/div/div[3]/div"));
+        WebElement a = adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[1]"));
 
         for (int j = 0; j < i; j++) {
 
@@ -60,15 +62,15 @@ public class Positions {
                 }
 
 
-                if (removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[3]")).getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
+                if (removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[3]")).getText()).equalsIgnoreCase(mypositions.get(j).getPositionId())) {
 
-                    if (adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText().equalsIgnoreCase(mypositions.get(j).getPortfolioId()) &&
-                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName()) &&
-                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency()) &&
-                            Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[7]")).getText())).equals(Double.valueOf(mypositions.get(j).getWeightedExposureValueExpCCY())) &&
-                            Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[8]")).getText())).equals(Double.valueOf(removingDoubleQuotations(mypositions.get(j).getExpBas()))) &&
-                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[10]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionGroup()) &&
-                            adriver.findElement(By.xpath("//*[@id=\"Positions-Grid\"]/div/div/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText().equalsIgnoreCase(mypositions.get(j).getBasCurrency())) {
+                    if (adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[2]")).getText().equalsIgnoreCase(mypositions.get(j).getPortfolioId()) &&
+                      //      adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[4]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionName()) &&
+                        //    adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[5]")).getText().equalsIgnoreCase(mypositions.get(j).getExposureCurrency()) &&
+                      //      Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[7]")).getText())).equals(Double.valueOf(mypositions.get(j).getWeightedExposureValueExpCCY())) &&
+                    //        Double.valueOf(removingDoubleQuotations(adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[8]")).getText())).equals(Double.valueOf(removingDoubleQuotations(mypositions.get(j).getExpBas()))) &&
+                    //        adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[10]")).getText().equalsIgnoreCase(mypositions.get(j).getPositionGroup()) &&
+                            adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[3]/div[3]/table/tbody/tr[" + local + "]/td[6]")).getText().equalsIgnoreCase(mypositions.get(j).getBasCurrency())) {
                         System.out.println("found on line" + t + ", full object match");
                         seeker = true;
                         break;
@@ -102,14 +104,26 @@ public class Positions {
         adriver.manage().window().maximize();
         adriver.navigate().to(testingVariablesPile.getHost() + "#!positions-admin");
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!positions-admin");//
-        adriver.findElement(By.xpath("/html/body/div[1]/div/div[2]/div[1]/div[1]/span[2]/span[2]")).click();
-        adriver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/span[6]/span")).click();
-        wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"upload_3\"]/div[2]/div")));
-        adriver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/div[3]/div/div/div[1]/div[1]/div[2]/input")).sendKeys("xl test (excel_sheet)" + Keys.ENTER);
-        WebElement e = adriver.findElement(By.id("upload file button"));
+        wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[2]/div/span")));
+        adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[2]/div/span")).click();
+        adriver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/span[2]/span")).click();
+
+        wait.until(presenceOfElementLocated(By.xpath("/html/body/div[2]/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/input")));
+           adriver.findElement(By.xpath("/html/body/div[2]/div[2]/div/div/div[3]/div/div/div[1]/div/div[2]/input")).sendKeys("xl test (Excel)" + Keys.ENTER + Keys.ENTER);
+        WebElement e = adriver.findElement(By.id("selectFileButton"));
         e.click();
-        e.sendKeys("C:\\Users\\exist\\Serenity 58 ApS\\Saepions - Documents\\SaepioX Share\\11 Test\\Data\\20191202 Positions.xlsx");
+
+        try {
+            Runtime.getRuntime().exec("C:\\Tests\\FileUpload.exe");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        e = adriver.findElement(By.id("importButton"));
+        wait.until(ExpectedConditions.textToBePresentInElement(adriver.findElement(By.id("processResult")), "Data successfully processed and ready to import"));
+        e.click();
 
     }
+
+
 }
+

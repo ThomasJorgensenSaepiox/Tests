@@ -16,13 +16,14 @@ public class GenerateUser {
     public static void auser(WebDriver adriver) {
         WebElement a = adriver.findElement(By.tagName("iframe"));
         WebDriverWait wait = new WebDriverWait(adriver, 10);
+        adriver.navigate().to(testingVariablesPile.getHost() + "#!agreement");
         adriver.navigate().to(testingVariablesPile.getHost() + "#!user-admin");
         wait.until(presenceOfElementLocated(By.id("add")));
         adriver.findElement(By.id("add")).click();
         adriver.findElement(By.id("email")).sendKeys("aMail@aMailService.com");
         adriver.findElement(By.id("userName")).sendKeys("Bad Client");
         adriver.findElement(By.id("name")).sendKeys("Charles Ponzi");
-        adriver.findElement(By.id("password")).sendKeys("aTerriblePassword" + Keys.TAB + Keys.ARROW_DOWN+ Keys.ENTER + Keys.TAB + "charles" + Keys.ENTER);
+        adriver.findElement(By.id("password")).sendKeys("aTerriblePassword" + Keys.TAB + Keys.ARROW_DOWN+ Keys.ENTER + Keys.TAB + "charles" +Keys.ENTER+Keys.ENTER);
         adriver.findElement(By.id("update")).click();
         adriver.findElement(By.id("logout")).click();
         wait.until(stalenessOf(a));
