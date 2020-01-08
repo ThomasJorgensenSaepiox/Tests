@@ -1,13 +1,30 @@
 package tester;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+
 public class Dashboard {
+    public static void Navigate_to_Dashboard(WebDriver adriver) {
+        WebDriverWait wait = new WebDriverWait(adriver, 10);
+        adriver.navigate().to(testingVariablesPile.getHost() + "#!dashboard");
+        wait.until(presenceOfElementLocated(By.id("dashboard-grid")));
+    }
+
+    public static void take_screenshot_dashboard(WebDriver adriver){
+        File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_dashboard.jpg"));
+        }
+        catch (IOException e){
+
+        }}
     public static void setMypositions(List<position> somePositions) {
         mypositions = somePositions;
     }

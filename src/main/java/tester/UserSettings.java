@@ -2,16 +2,33 @@ package tester;
 
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.apache.commons.lang3.EnumUtils;
+
+import java.io.File;
+import java.io.IOException;
+
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
 
 public class UserSettings{
     static Integer i = 1;
+    public static void Navigate_to_user_settings(WebDriver adriver) {
+        WebDriverWait wait = new WebDriverWait(adriver, 10);
+        adriver.navigate().to(testingVariablesPile.getHost() + "#!user-settings");
+        wait.until(presenceOfElementLocated(By.id("dateStylePicker")));
+    }
+
+    public static void take_screenshot_user_settings(WebDriver adriver){
+        File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_user_settings.jpg"));
+        }
+        catch (IOException e){
+
+        }}
 public static void dateCheck(WebDriver adriver){
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.get(testingVariablesPile.getHost()+"#!user-settings");

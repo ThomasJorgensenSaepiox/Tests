@@ -1,14 +1,13 @@
 package tester;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.IOException;
 import java.security.Key;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +16,20 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class Agreement {
 
+    public static void Navigate_to_Agreement(WebDriver adriver) {
+        WebDriverWait wait = new WebDriverWait(adriver, 10);
+        adriver.navigate().to(testingVariablesPile.getHost() + "#!agreement");
+        wait.until(presenceOfElementLocated(By.id("agreement_list")));
+    }
 
+    public static void take_screenshot_agreement(WebDriver adriver){
+        File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_agreement.jpg"));
+        }
+        catch (IOException e){
+
+        }}
     public static void createagreement(WebDriver adriver){
 
             adriver.navigate().to(testingVariablesPile.getHost()+"#!agreement");

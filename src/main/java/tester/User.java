@@ -1,24 +1,38 @@
 package tester;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
 
-public class GenerateUser {
+public class User {
        private static WebElement a;
+    public static void Navigate_to_user(WebDriver adriver) {
+        WebDriverWait wait = new WebDriverWait(adriver, 10);
+        adriver.navigate().to(testingVariablesPile.getHost() + "#!user-admin");
+        wait.until(presenceOfElementLocated(By.id("list_of_users")));
+    }
 
+    public static void take_screenshot_user(WebDriver adriver){
+        File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_user_admin.jpg"));
+        }
+        catch (IOException e){
+
+        }}
 
     public static void auser(WebDriver adriver) {
         WebElement a = adriver.findElement(By.tagName("iframe"));
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!agreement");
+
         adriver.navigate().to(testingVariablesPile.getHost() + "#!user-admin");
-        wait.until(presenceOfElementLocated(By.id("add")));
+        wait.until(presenceOfElementLocated(By.id("list_of_users")));
         adriver.findElement(By.id("add")).click();
         adriver.findElement(By.id("email")).sendKeys("aMail@aMailService.com");
         adriver.findElement(By.id("userName")).sendKeys("Bad Client");
@@ -47,7 +61,7 @@ public class GenerateUser {
         int i = 1;
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(testingVariablesPile.getHost() + "#!user-admin");
-        wait.until(presenceOfElementLocated(By.id("add")));
+        wait.until(presenceOfElementLocated(By.id("list_of_users")));
         WebElement a = adriver.findElement(By.tagName("html"));
         while(i !=0 ){
             if (adriver.findElements(By.xpath("/html/body/div[1]/div/div[2]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div[3]/table/tbody/tr["+i+"]/td[3]")).size()>0){

@@ -171,14 +171,25 @@ public class importTestExcel {
                         if (cell.getCellType() == CellType.FORMULA) {
                             if (evaluator.evaluate(cell).getCellType() == CellType.STRING) {
                                 String temporary = evaluator.evaluate(cell).getStringValue();
+                                cell.removeFormula();
                                 cell.setCellValue(temporary);
+
                             } else if (evaluator.evaluate(cell).getCellType() == CellType.NUMERIC) {
+
                                 Double temp = evaluator.evaluate(cell).getNumberValue();
+                                cell.removeFormula();
                                 cell.setCellValue(temp);
+
                             } else if (evaluator.evaluate(cell).getCellType() == CellType.BOOLEAN) {
                                 Boolean ephemeral = evaluator.evaluate(cell).getBooleanValue();
+                                cell.removeFormula();
                                 cell.setCellValue(ephemeral);
-                            } else if (evaluator.evaluate(cell).getCellType() == CellType.BLANK) {
+
+                            }
+                            else if (evaluator.evaluate(cell).getCellType() == CellType._NONE){
+
+                            }
+                            else if (evaluator.evaluate(cell).getCellType() == CellType.BLANK) {
                             } else if (evaluator.evaluate(cell).getCellType() == CellType.ERROR) {
                                 System.out.println("ERROR ENCOUNTERED. If you see this text, something is messed up");
                             }

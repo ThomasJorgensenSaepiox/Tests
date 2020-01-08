@@ -1,7 +1,15 @@
 package tester;
 
 public class testingVariablesPile {
-   public enum months3Letter {
+    public static String getWebbrowser() {
+        return webbrowser;
+    }
+
+    public static void setWebbrowser(String webbrowser) {
+        testingVariablesPile.webbrowser = webbrowser;
+    }
+
+    public enum months3Letter {
         JAN, FEB,MAR,APR,MAY,JUN,JUL,AUG,SEB,OCT,NOV,DEC
     }
     public enum months{JANUARY,FEBRUARY,MARCH,APRIL,MAY,JUNE,JULY,AUGUST,SEPTEMBER,OCTOBER,NOVEMBER,DECEMBER
@@ -14,6 +22,8 @@ public class testingVariablesPile {
     private static String host = "http://localhost:5000/";
     private static String adminlogin = "tj@saepiox.com";
     private static String adminPass="pass";
+    private static String webbrowser = "browse";
+
 
     public static void setList1(String[] list1) {
         testingVariablesPile.list1 = list1;
