@@ -3,9 +3,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import tester.Login;
+import tester.Session;
 import tester.UserSettings;
-import tester.testingVariablesPile;
+import tester.theVariables;
 
 public class dateSettingsTest {
 
@@ -16,14 +16,14 @@ public class dateSettingsTest {
 
 
 
-            testingVariablesPile.setAdminPass("pass");
-            testingVariablesPile.setAdminlogin("tj@saepiox.com");
+            theVariables.setAdminPass("pass");
+            theVariables.setAdminlogin("tj@saepiox.com");
         }
         @Test
         public void testingDateFormats(){
             driver = new ChromeDriver();
 
-            Login.admin(driver);
+            Session.admin(driver);
             UserSettings.dateCheck(driver);
         }@After
         public void teardown() {

@@ -23,7 +23,7 @@ this does a minimalist import from an excel file into a list of objects, then ve
 
  */
 public class importTestExcel {
-    public static List<position> dash(File afile) throws IOException {
+    public List<position> dash(File afile) throws IOException {
         List<position> positions = new LinkedList<position>();
         if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
             System.out.println("yes, no, pull the other one, it has bells on it. this needs to be an excelsheet");
@@ -97,7 +97,7 @@ public class importTestExcel {
         return positions;
     }
 
-    public static void maturityDateUpdatingForTestingDoNotUseOnProductionData(File afile) throws IOException {
+    public void maturityDateUpdatingForTestingDoNotUseOnProductionData(File afile) throws IOException {
 
         if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
             System.out.println("yes, no, pull the other one, it has bells on it. this needs to be an excelsheet");
@@ -154,7 +154,7 @@ public class importTestExcel {
 
     }
 
-    public static File parseExcellFormulas(File afile) throws IOException {
+    public File parseExcellFormulas(File afile) throws IOException {
 
         if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
             System.out.println("yes, no, pull the other one, it has bells on it. this needs to be an excelsheet");
@@ -214,7 +214,7 @@ public class importTestExcel {
 
     }
 
-    public static List<position> positionstobeloaded_excell(File afile) throws IOException {
+    public List<position> positionstobeloaded_excell(File afile) throws IOException {
         List<position> positions = new LinkedList<position>();
 
         if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
@@ -416,7 +416,7 @@ public class importTestExcel {
         return positions;
     }
 
-    public static void readFile(File afile) throws IOException {
+    public void readFile(File afile) throws IOException {
         Map<Integer, String> stringMap = null;
         List<position> positions = new LinkedList<position>();
         if (!afile.exists() || (!FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xlsx") && !FilenameUtils.getExtension(afile.getAbsolutePath()).equalsIgnoreCase("xls"))) {
@@ -581,13 +581,13 @@ public class importTestExcel {
         }
     }
 
-    private static String removingDoubleQuotations(String aNumber3) {
+    private String removingDoubleQuotations(String aNumber3) {
         return aNumber3.replaceAll("\"", "").trim().replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;");
 
     }
 
 
-    private static String correctingDateFormat(String aNumber5) {
+    private String correctingDateFormat(String aNumber5) {
 
         if (aNumber5.length() < 10) {
             return "9999-11-11";

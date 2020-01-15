@@ -12,17 +12,17 @@ import java.io.IOException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-public class trade {
-    public static void Navigate_to_Trade(WebDriver adriver) {
+public class Trade {
+    public void Navigate_to_Trade(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!trade");
+        adriver.navigate().to(variables.getHost() + "#!trade");
         wait.until(presenceOfElementLocated(By.id("trade_grid")));
     }
 
-    public static void take_screenshot_trades(WebDriver adriver){
+    public void take_screenshot_trades(WebDriver adriver, TheMasterVariables variables){
         File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_trades.jpg"));
+            FileUtils.copyFile(screenshot, new File(variables.getScreenSaveLocation()+ variables.getWebBrowser() +"_trades.jpg"));
         }
         catch (IOException e){
 

@@ -1,249 +1,69 @@
-import java.io.File;
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import tester.Login;
-import tester.testingVariablesPile;
+import tester.*;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
+import java.util.Optional;
 
 public class BrowserVerification {
-private static String host;
-@Before
 
-   public void kickoff() {
-    testingVariablesPile.setHost("http://saepioxdemo-env1.gyjqm9fxqx.eu-central-1.elasticbeanstalk.com/");
-    host= testingVariablesPile.getHost();
-}
-@Test
-public  void FireFox(){
-    System.out.println("checking if all screens load in firefox, saving screenshots");
-             WebDriver driver = new FirefoxDriver();
+    private void generic_test(WebDriver adriver, TheMasterVariables aVar){
+        Agreement agreement = new Agreement();
+        agreement.Navigate_to_Agreement(adriver, aVar);
+        agreement.take_screenshot_agreement(adriver, aVar);
+        Csa csa = new Csa();
+        csa.Navigate_to_csa(adriver, aVar);
+        csa.take_screenshot_csa(adriver, aVar);
+        Dashboard dashboard = new Dashboard();
+        dashboard.Navigate_to_Dashboard(adriver, aVar);
+        dashboard.take_screenshot_dashboard(adriver, aVar);
+        Limits limits = new Limits();
+        limits.Navigate_to_Limits(adriver, aVar);
+        limits.take_screenshot_limits(adriver, aVar);
+        Limits_history limits_history = new Limits_history();
+        limits_history.Navigate_to_Limit_history(adriver, aVar);
+        limits_history.take_screenshot_limit_history(adriver, aVar);
+        Localization localization = new Localization();
+        localization.Navigate_to_localization(adriver, aVar);
+        localization.take_screenshot_tradesheet(adriver,aVar);
+        Portfolios portfolios = new Portfolios();
+        portfolios.Navigate_to_portfolio(adriver, aVar);
+        portfolios.take_screenshot_portfolio(adriver, aVar);
+        Position_history position_history = new Position_history();
+        position_history.Navigate_to_position_history(adriver, aVar);
+        position_history.take_screenshot_position_history(adriver, aVar);
+        Positions positions = new Positions();
+        positions.Navigate_to_positions(adriver, aVar);
+        positions.take_screenshot_positions(adriver, aVar);
+        Trade trade = new Trade();
+        trade.Navigate_to_Trade(adriver, aVar);
+        trade.take_screenshot_trades(adriver, aVar);
+        Tradehistory tradehistory = new Tradehistory();
+        tradehistory.Navigate_to_Trade(adriver, aVar);
+        tradehistory.take_screenshot_trades(adriver, aVar);
+        Tradesheet tradesheet = new Tradesheet();
+        tradesheet.Navigate_to_Tradesheet(adriver, aVar);
+        tradesheet.take_screenshot_tradesheet(adriver, aVar);
+        User user = new User();
+        user.Navigate_to_user(adriver, aVar);
+        user.take_screenshot_user(adriver, aVar);
+        UserSettings userSettings = new UserSettings();
+        userSettings.Navigate_to_user_settings(adriver, aVar);
+        userSettings.take_screenshot_user_settings(adriver, aVar);
+        Xray xray = new Xray();
+        xray.Navigate_to_x_ray(adriver, aVar);
+        xray.take_screenshot_xray(adriver, aVar);
+    }
 
-    // Puts an Implicit wait, Will wait for 10 seconds before throwing exception
-           driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-    // Launch website
-           driver.navigate().to(host+"");
-
-    // Maximize the browser
-              driver.manage().window().maximize();
-
-
-             File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox1.jpg"));
-            driver.findElement(By.id("login")).sendKeys("tm@saepiox.com");
-            driver.findElement(By.id("password")).sendKeys("pass");
-            driver.findElement(By.id("button-submit")).click();
-
-           screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox2.jpg"));
-            driver.navigate().to(host+"#!position-change");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox3.jpg"));
-            driver.navigate().to(host+"#!position-change-view-new");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox4.jpg"));
-            driver.navigate().to(host+"#!trade");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox5.jpg"));
-
-            driver.navigate().to(host+"#!trade-history");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox6.jpg"));
-            driver.navigate().to(host+"#!positions-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox7.jpg"));
-            driver.navigate().to(host+"#!csa");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox8.jpg"));
-            driver.navigate().to(host+"#!portfolio-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox9.jpg"));
-            driver.navigate().to(host+"#!user-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox10.jpg"));
-            driver.navigate().to(host+"#!calculations-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox11.jpg"));
-            driver.navigate().to(host+"#!calculations-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox12.jpg"));
-            driver.navigate().to(host+"#!localized-text");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox13.jpg"));
-            driver.navigate().to(host+"#!agreement");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox14.jpg"));
-            driver.navigate().to(host+"#!user-settings");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\FireFox14.jpg"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
- finally {
-
-
-            //Close the Browser.
-            driver.close();
-        }}
-        @Test
-    public  void Chrome(){
+    public void Chrome() {
+        TheMasterVariables variables = new TheMasterVariables("http://www.localhost:5000/","tj@saepiox.com","pass","chrome","Charles Ponzi",
+                "ASSET_MANAGER", Optional.of("C:\\Tests\\FileUpload1.exe"),Optional.of("C:\\Tests\\FileUpload2.exe"),Optional.of("anEmail@mail.com"),
+                Optional.of("@TerriblePass1"),Optional.of("Bad User"),"C:\\screenshots\\");
         WebDriver driver = new ChromeDriver();
-        System.out.println("Checking if all screens function in chrome, saving screenshots");
-        // Puts an Implicit wait, Will wait for 10 seconds before throwing exception
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        // Launch website
-        driver.navigate().to(host+"");
-
-        // Maximize the browser
-        driver.manage().window().maximize();
+        generic_test(driver, variables);
 
 
-        File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome1.jpg"));
-            driver.findElement(By.id("login")).sendKeys("tm@saepiox.com");
-            driver.findElement(By.id("password")).sendKeys("pass");
-            driver.findElement(By.id("button-submit")).click();
+    }
 
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome2.jpg"));
-            driver.navigate().to(host+"#!position-change");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome15.jpg"));
-            driver.navigate().to(host+"#!user-settings");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome3.jpg"));
-            driver.navigate().to(host+"#!position-change-view-new");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome4.jpg"));
-            driver.navigate().to(host+"#!trade");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome5.jpg"));
-
-            driver.navigate().to(host+"#!trade-history");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome6.jpg"));
-            driver.navigate().to(host+"#!positions-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome7.jpg"));
-            driver.navigate().to(host+"#!csa");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome8.jpg"));
-            driver.navigate().to(host+"#!portfolio-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome9.jpg"));
-            driver.navigate().to(host+"#!user-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome10.jpg"));
-            driver.navigate().to(host+"#!calculations-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome11.jpg"));
-            driver.navigate().to(host+"#!calculations-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome12.jpg"));
-            driver.navigate().to(host+"#!localized-text");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome13.jpg"));
-            driver.navigate().to(host+"#!agreement");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\Chrome14.jpg"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        finally {
-
-
-            //Close the Browser.
-            driver.close();
-        }}
-/*        @Test
-   public  void edge(){
-        WebDriver driver = new EdgeDriver();
-
-        // Puts an Implicit wait, Will wait for 10 seconds before throwing exception
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        // Launch website
-        driver.navigate().to(host+"");
-
-        // Maximize the browser
-        driver.manage().window().maximize();
-
-
-        File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge1.jpg"));
-            driver.findElement(By.id("login")).sendKeys("tm@saepiox.com");
-            driver.findElement(By.id("password")).sendKeys("pass");
-            driver.findElement(By.id("button-submit")).click();
-
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge2.jpg"));
-            driver.navigate().to(host+"#!position-change");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge3.jpg"));
-            driver.navigate().to(host+"#!position-change-view-new");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge4.jpg"));
-            driver.navigate().to(host+"#!trade");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge5.jpg"));
-
-            driver.navigate().to(host+"#!trade-history");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge6.jpg"));
-            driver.navigate().to(host+"#!positions-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge7.jpg"));
-            driver.navigate().to(host+"#!csa");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge8.jpg"));
-            driver.navigate().to(host+"#!portfolio-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge9.jpg"));
-            driver.navigate().to(host+"#!user-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge10.jpg"));
-            driver.navigate().to(host+"#!calculations-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge11.jpg"));
-            driver.navigate().to(host+"#!calculations-admin");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge12.jpg"));
-            driver.navigate().to(host+"#!localized-text");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge13.jpg"));
-            driver.navigate().to(host+"#!agreement");
-            screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\edge14.jpg"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        finally {
-
-
-            //Close the Browser.
-            driver.close();
-        }}
-  */  }
-
+}

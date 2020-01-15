@@ -12,17 +12,17 @@ import java.io.IOException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-public class position_history {
-    public static void Navigate_to_position_history(WebDriver adriver) {
+public class Position_history {
+    public void Navigate_to_position_history(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!position-change-view-new");
+        adriver.navigate().to(variables.getHost() + "#!position-change-view-new");
         wait.until(presenceOfElementLocated(By.id("position_history")));
     }
 
-    public static void take_screenshot_position_history(WebDriver adriver) {
+    public void take_screenshot_position_history(WebDriver adriver, ScreenshotVariables variables) {
         File screenshot = ((TakesScreenshot) adriver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\" + testingVariablesPile.getWebbrowser() + "_tradesheet.jpg"));
+            FileUtils.copyFile(screenshot, new File(variables.getScreenSaveLocation() + variables.getWebBrowser() + "_tradesheet.jpg"));
         } catch (IOException e) {
 
         }

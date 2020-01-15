@@ -2,52 +2,47 @@ package tester;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.Coordinates;
-import org.openqa.selenium.interactions.Locatable;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Sleeper;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class Positions {
-    public static void Navigate_to_positions(WebDriver adriver) {
+    public void Navigate_to_positions(WebDriver adriver, PositionVariables aVariables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!positions-admin");
-        wait.until(presenceOfElementLocated(By.id("positions_table")));
+        adriver.navigate().to(aVariables.getHost() + "#!positions-admin");
+     wait.until(presenceOfElementLocated(By.id("positions_table")));
     }
 
-    public static void take_screenshot_positions(WebDriver adriver){
+    public void take_screenshot_positions(WebDriver adriver, ScreenshotVariables variables){
         File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_portfolio.jpg"));
+            FileUtils.copyFile(screenshot, new File(variables.getScreenSaveLocation()+ variables.getWebBrowser() +"_portfolio.jpg"));
         }
         catch (IOException e){
 
         }}
-    public static void setMypositions(List<position> somePositions) {
+    public void setMypositions(List<position> somePositions) {
         mypositions = somePositions;
     }
 
-    private static List<position> mypositions = new LinkedList<position>();
+    private List<position> mypositions = new LinkedList<position>();
 
-    public static void setList(List<position> alist) {
+    public void setList(List<position> alist) {
         mypositions = alist;
     }
 
-    public static void Test(WebDriver adriver) throws InterruptedException {
+    public void Test(WebDriver adriver, PositionVariables variables) throws InterruptedException {
 
         adriver.manage().window().setPosition(new Point(-1000, 0));
         adriver.manage().window().maximize();
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!positions-admin");
+
+        adriver.navigate().to(new StringBuilder().append(variables.getHost()).append("#!positions-admin").toString());
         WebDriverWait wait = new WebDriverWait(adriver, 10);
 
 
@@ -115,10 +110,10 @@ public class Positions {
 
     }
 
-    static public void uploadTestPositions(WebDriver adriver) {
+    static void uploadTestPositions(WebDriver adriver, PositionVariables variables) {
         adriver.manage().window().setPosition(new Point(-1000, 0));
         adriver.manage().window().maximize();
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!positions-admin");
+        adriver.navigate().to(variables.getHost() + "#!positions-admin");
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         wait.until(presenceOfElementLocated(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[2]/div/span")));
         adriver.findElement(By.xpath("//*[@id=\"content\"]/div/div/div/div[2]/div/div[2]/div/span")).click();
@@ -130,7 +125,7 @@ public class Positions {
         e.click();
 
         try {
-            Runtime.getRuntime().exec("C:\\Tests\\FileUpload.exe");
+            Runtime.getRuntime().exec(variables.getImportPositionsScript().orElse("C:\\Tests\\FileUpload.exe"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

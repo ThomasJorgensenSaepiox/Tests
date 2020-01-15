@@ -11,27 +11,27 @@ import java.util.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public class Dashboard {
-    public static void Navigate_to_Dashboard(WebDriver adriver) {
+    public void Navigate_to_Dashboard(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!dashboard");
+        adriver.navigate().to(variables.getHost() + "#!dashboard");
         wait.until(presenceOfElementLocated(By.id("dashboard-grid")));
     }
 
-    public static void take_screenshot_dashboard(WebDriver adriver){
+    public void take_screenshot_dashboard(WebDriver adriver, ScreenshotVariables variables){
         File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_dashboard.jpg"));
+            FileUtils.copyFile(screenshot, new File(variables.getScreenSaveLocation()+ variables.getWebBrowser() +"_dashboard.jpg"));
         }
         catch (IOException e){
 
         }}
-    public static void setMypositions(List<position> somePositions) {
+    public void setMypositions(List<position> somePositions) {
         mypositions = somePositions;
     }
 
-    private static List<position> mypositions = new LinkedList<position>();
+    private List<position> mypositions = new LinkedList<position>();
 
-    public static void Test(WebDriver adriver) {
+    public void Test(WebDriver adriver) {
         adriver.manage().window().setPosition(new Point(-1000,0));
         adriver.manage().window().maximize();
 
@@ -82,7 +82,7 @@ public class Dashboard {
         }
     }
 
-    private static String removingDoubleQuotations(String aNumber3) {
+    private String removingDoubleQuotations(String aNumber3) {
         return aNumber3.replaceAll("\"", "").trim().replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&apos;").replace(",", "");
 
     }

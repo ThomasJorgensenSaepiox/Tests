@@ -12,19 +12,21 @@ import java.io.IOException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-public class csa {
-    public static void Navigate_to_csa(WebDriver adriver) {
+public class Xray {
+    public void Navigate_to_x_ray(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(testingVariablesPile.getHost() + "#!csa");
-        wait.until(presenceOfElementLocated(By.id("csa_list")));
+        adriver.navigate().to(variables.getHost() + "#!x-ray-admin");
+        wait.until(presenceOfElementLocated(By.id("xray_list")));
     }
 
-    public static void take_screenshot_csa(WebDriver adriver){
+    public void take_screenshot_xray(WebDriver adriver, ScreenshotVariables variables){
         File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenshot, new File("C:\\screenshots\\"+ testingVariablesPile.getWebbrowser() +"_csa.jpg"));
+            FileUtils.copyFile(screenshot, new File(variables.getScreenSaveLocation()+ variables.getWebBrowser() +"_x_ray.jpg"));
         }
         catch (IOException e){
 
-        }}
+        }
+
+    }
 }

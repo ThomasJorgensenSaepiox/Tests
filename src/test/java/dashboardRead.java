@@ -3,7 +3,7 @@ import org.openqa.selenium.WebDriver;
 import tester.*;
 import org.junit.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
-import tester.testingVariablesPile;
+import tester.theVariables;
 import tester.User;
 public class dashboardRead {
     private static WebDriver driver;
@@ -12,13 +12,13 @@ public class dashboardRead {
     public void setup() {
 
 
-        testingVariablesPile.setAdminPass("pass");
-        testingVariablesPile.setAdminlogin("rg@saepiox.com");
+        theVariables.setAdminPass("pass");
+        theVariables.setAdminlogin("rg@saepiox.com");
     }
     @Test
     public void testingDefaultDash(){
         driver = new ChromeDriver();
-        Login.admin(driver);
+        Session.admin(driver);
 /*//this is some trash to verify the logic of the test - with an actually functional import, these will be set by code. 3 first entries match current database, last 2 are wrong.
         testingVariablesPile.setList1(new String[]{"-2,049,927","2,834,430","93,439,123","500,963,338" ,"511,304" ,"2,616,409"});
         testingVariablesPile.setList2(new String[]{"aud","gbp","usd","jpy" ,"cad" ,"gbp"});
@@ -28,7 +28,7 @@ public class dashboardRead {
     }
     @Test
     public void testingCharlesDash(){
-        Login.admin(driver);
+        Session.admin(driver);
         User.auser(driver);
 
     }

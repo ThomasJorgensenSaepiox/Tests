@@ -1,23 +1,10 @@
 package tester;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-import static org.openqa.selenium.support.ui.ExpectedConditions.stalenessOf;
+import java.util.Optional;
 
 public class Tester {
     private static String targethost = "http://www.localhost:5000/";
@@ -25,21 +12,23 @@ public class Tester {
     public static void main(String[] args) {
      WebDriver driver = new ChromeDriver();
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        testingVariablesPile.setAdminPass("pass");
-        testingVariablesPile.setAdminlogin("rg@saepiox.com");
-        testingVariablesPile.setHost(targethost);
+        TheMasterVariables variables = new TheMasterVariables("http://www.localhost:5000/","tj@saepiox.com","pass","chrome","Charles Ponzi",
+                "ASSET_MANAGER", Optional.of("C:\\Tests\\FileUpload1.exe"),Optional.of("C:\\Tests\\FileUpload2.exe"),Optional.of("anEmail@mail.com"),
+                Optional.of("@TerriblePass1"),Optional.of("Bad User"),"C:\\screenshots\\");
+
+        System.out.println();
 
       try {
 
        //   GenerateUser.Delete_test_user(driver);
         //
-        Login.admin(driver);
+     //   Login.admin(driver);
          // GenerateUser.auser(driver);
 
-          Agreement.createagreement(driver);
+       //   Agreement.createagreement(driver);
          //Login.charles(driver);
         // portfolios.uploadTestPortfolios(driver);
-        Positions.uploadTestPositions(driver);
+       // Positions.uploadTestPositions(driver);
       //UserSettings.dateCheck(driver);
         // FileUtils.copyFile(importTestExcel.parseExcellFormulas(new File("C:\\Tests\\20Positions.xlsx")),new File("C:\\Tests\\20191202 Positions.xlsx"));
         //  Positions.setMypositions(importTestExcel.positionstobeloaded_excell(new File("C:\\Tests\\20191202 Positions.xlsx")));

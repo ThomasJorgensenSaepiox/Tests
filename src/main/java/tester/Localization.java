@@ -12,19 +12,22 @@ import java.io.IOException;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-public class Limits_history {
-    public void Navigate_to_Limit_history(WebDriver adriver, SessionVariables variables) {
+public class Localization {
+    public void Navigate_to_localization(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-        adriver.navigate().to(variables.getHost() + "#!limit-calculation-history");
-        wait.until(presenceOfElementLocated(By.id("Limits_history")));
+        adriver.navigate().to(variables.getHost() + "#!localized-text");
+        wait.until(presenceOfElementLocated(By.id("localization_list")));
     }
 
-    public void take_screenshot_limit_history(WebDriver adriver, ScreenshotVariables variables){
+    public void take_screenshot_tradesheet(WebDriver adriver, ScreenshotVariables variables){
         File screenshot = ((TakesScreenshot)adriver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(screenshot, new File(variables.getScreenSaveLocation()+ variables.getWebBrowser() +"_Limit_history.jpg"));
+            FileUtils.copyFile(screenshot, new File(variables.getScreenSaveLocation()+ variables.getWebBrowser() +"_localization.jpg"));
         }
         catch (IOException e){
 
-        }}
+        }
+
+    }
+
 }
