@@ -16,7 +16,7 @@ public class Tradehistory {
     public void Navigate_to_Trade(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!trade-history");
-        wait.until(presenceOfElementLocated(By.id("trade_history")));
+        wait.until(presenceOfElementLocated(By.id("TradeHistory_TradeDetails")));
     }
 
     public void take_screenshot_trades(WebDriver adriver, TheMasterVariables variables){

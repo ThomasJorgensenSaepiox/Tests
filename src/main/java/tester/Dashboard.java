@@ -11,10 +11,10 @@ import java.util.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public class Dashboard {
-    public void Navigate_to_Dashboard(WebDriver adriver, TheMasterVariables variables) {
+    public void Navigate_to_Dashboard(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!dashboard");
-        wait.until(presenceOfElementLocated(By.id("dashboard-grid")));
+        wait.until(presenceOfElementLocated(By.id("DashBoard_BoardChart")));
     }
 
     public void take_screenshot_dashboard(WebDriver adriver, ScreenshotVariables variables){

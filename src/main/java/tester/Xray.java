@@ -16,7 +16,7 @@ public class Xray {
     public void Navigate_to_x_ray(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!x-ray-admin");
-        wait.until(presenceOfElementLocated(By.id("xray_list")));
+        wait.until(presenceOfElementLocated(By.id("Xray_Grid")));
     }
 
     public void take_screenshot_xray(WebDriver adriver, ScreenshotVariables variables){

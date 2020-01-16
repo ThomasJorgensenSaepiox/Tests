@@ -14,7 +14,7 @@ public class Tradesheet {
 public void Navigate_to_Tradesheet(WebDriver adriver, TheMasterVariables variables) {
     WebDriverWait wait = new WebDriverWait(adriver, 10);
     adriver.navigate().to(variables.getHost() + "#!trade-sheet");
-    wait.until(presenceOfElementLocated(By.id("tradesheet")));
+    wait.until(presenceOfElementLocated(By.id("TradeSheet_Grid")));
 }
 
 public void take_screenshot_tradesheet(WebDriver adriver, ScreenshotVariables variables){

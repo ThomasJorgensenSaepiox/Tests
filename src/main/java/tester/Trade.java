@@ -16,7 +16,7 @@ public class Trade {
     public void Navigate_to_Trade(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!trade");
-        wait.until(presenceOfElementLocated(By.id("trade_grid")));
+        wait.until(presenceOfElementLocated(By.id("TradeView_TradeDetailsGrid")));
     }
 
     public void take_screenshot_trades(WebDriver adriver, TheMasterVariables variables){

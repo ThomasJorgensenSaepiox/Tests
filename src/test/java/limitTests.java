@@ -6,14 +6,7 @@ import tester.*;
 
 public class limitTests {
     private static WebDriver driver;
-    @Before
-    public void setup(){
 
-
-
-        theVariables.setAdminPass("pass");
-        theVariables.setAdminlogin("tj@saepiox.com");
-    }
     @Test
     public void create_agreement(){
         driver = new ChromeDriver();
@@ -21,8 +14,8 @@ public class limitTests {
       //  Login.admin(driver);
      //   Agreement.createagreement(driver);
         //GenerateUser.auser(driver);
-       Session.admin(driver);
-            Positions.uploadTestPositions(driver);
+  //     Session.admin(driver);
+    //        Positions.uploadTestPositions(driver);
 
         //GenerateUser.Delete_test_user(driver);
     }

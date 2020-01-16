@@ -16,7 +16,7 @@ public class Positions {
     public void Navigate_to_positions(WebDriver adriver, PositionVariables aVariables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(aVariables.getHost() + "#!positions-admin");
-     wait.until(presenceOfElementLocated(By.id("positions_table")));
+     wait.until(presenceOfElementLocated(By.id("PositionAdmin_PositionsTable")));
     }
 
     public void take_screenshot_positions(WebDriver adriver, ScreenshotVariables variables){

@@ -14,7 +14,7 @@ public class Limits {
     public void Navigate_to_Limits(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!limits-admin");
-        wait.until(presenceOfElementLocated(By.id("limits_list")));
+        wait.until(presenceOfElementLocated(By.id("Limits_Admin_Lines")));
     }
 
     public void take_screenshot_limits(WebDriver adriver, ScreenshotVariables variables){

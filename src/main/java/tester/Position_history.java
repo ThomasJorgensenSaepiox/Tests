@@ -16,7 +16,7 @@ public class Position_history {
     public void Navigate_to_position_history(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!position-change-view-new");
-        wait.until(presenceOfElementLocated(By.id("position_history")));
+        wait.until(presenceOfElementLocated(By.id("PositionChange_Charts")));
     }
 
     public void take_screenshot_position_history(WebDriver adriver, ScreenshotVariables variables) {

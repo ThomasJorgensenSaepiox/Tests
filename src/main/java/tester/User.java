@@ -15,7 +15,7 @@ public class User {
     public void Navigate_to_user(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!user-admin");
-        wait.until(presenceOfElementLocated(By.id("list_of_users")));
+        wait.until(presenceOfElementLocated(By.id("UserAdmin_Delete")));
     }
 
     public void take_screenshot_user(WebDriver adriver, ScreenshotVariables variables){
@@ -28,18 +28,15 @@ public class User {
         }}
 
     public void auser(WebDriver adriver, TheMasterVariables variables) {
-        WebElement a = adriver.findElement(By.tagName("iframe"));
         WebDriverWait wait = new WebDriverWait(adriver, 10);
-
-        adriver.navigate().to(variables.getHost() + "#!user-admin");
-        wait.until(presenceOfElementLocated(By.id("list_of_users")));
-        adriver.findElement(By.id("add")).click();
-        adriver.findElement(By.id("email")).sendKeys(variables.geteMail().orElse("aMail@aMailService.com"));
-        adriver.findElement(By.id("userName")).sendKeys(variables.getUserName().orElse("Bad Client"));
-        adriver.findElement(By.id("name")).sendKeys(variables.getTest_User_To_Create());
-        adriver.findElement(By.id("password")).sendKeys(variables.getPass().orElse("@TerriblePass01") + Keys.TAB + Keys.ARROW_DOWN+ Keys.ENTER + Keys.TAB + variables.getTest_User_To_Create() +Keys.ENTER+Keys.ENTER);
-        adriver.findElement(By.id("update")).click();
-        adriver.findElement(By.id("logout")).click();
+        WebElement a = adriver.findElement(By.id("UserAdmin_Form"));
+        adriver.findElement(By.id("UserAdmin_Add")).click();
+        adriver.findElement(By.id("UserAdmin_Email")).sendKeys(variables.geteMail().orElse("aMail@aMailService.com"));
+        adriver.findElement(By.id("UserAdmin_UserName")).sendKeys(variables.getUserName().orElse("Bad Client"));
+        adriver.findElement(By.id("UserAdmin_Name")).sendKeys(variables.getTest_User_To_Create());
+        adriver.findElement(By.id("UserAdmin_Password")).sendKeys(variables.getPass().orElse("@TerriblePass01") + Keys.TAB + Keys.ARROW_DOWN+ Keys.ENTER + Keys.TAB + variables.getTest_User_To_Create() +Keys.ENTER+Keys.ENTER);
+        adriver.findElement(By.id("UserAdmin_Update")).click();
+        adriver.findElement(By.id("MainView_Logout")).click();
         wait.until(stalenessOf(a));
         a = adriver.findElement(By.tagName("html"));
         adriver.navigate().to(variables.getHost() + "#!login");
@@ -48,12 +45,13 @@ public class User {
         adriver.findElement(By.id("button-submit")).click();
         wait.until(stalenessOf(a));
         adriver.navigate().to(variables.getHost() + "#!dashboard");
-        wait.until(presenceOfElementLocated(By.xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[3]/div/input")));
-        a = adriver.findElement(By.xpath("/html/body/div[2]/div[3]/div/div/div[3]/div/div/div/div[3]/div/input"));
-        a.sendKeys(variables.getPass().orElse("@TerriblePass01") + Keys.TAB + variables.getPass().orElse("@TerriblePass01") + Keys.ENTER);
+        wait.until(presenceOfElementLocated(By.id("ChangePassword_NewPass1t")));
+        a = adriver.findElement(By.id("ChangePassword_NewPass1"));
+        adriver.findElement(By.id("ChangePassword_NewPass1")).sendKeys(variables.getPass().orElse("@TerriblePass01"));
+        adriver.findElement(By.id("ChangePassword_NewPass2")).sendKeys(variables.getPass().orElse("@TerriblePass01")+Keys.ENTER);
         wait.until(stalenessOf(a));
-        a = adriver.findElement(By.tagName("html"));
-        adriver.findElement(By.id("logout")).click();
+        a = adriver.findElement(By.id("MainView_Logout"));
+        a.click();
         wait.until(stalenessOf(a));
         System.out.println(variables.getTest_User_To_Create() + " added to users");
     }

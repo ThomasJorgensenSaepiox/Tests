@@ -16,7 +16,7 @@ public class Localization {
     public void Navigate_to_localization(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!localized-text");
-        wait.until(presenceOfElementLocated(By.id("localization_list")));
+        wait.until(presenceOfElementLocated(By.id("Localization_Delete")));
     }
 
     public void take_screenshot_tradesheet(WebDriver adriver, ScreenshotVariables variables){

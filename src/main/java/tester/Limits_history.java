@@ -16,7 +16,7 @@ public class Limits_history {
     public void Navigate_to_Limit_history(WebDriver adriver, SessionVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!limit-calculation-history");
-        wait.until(presenceOfElementLocated(By.id("Limits_history")));
+        wait.until(presenceOfElementLocated(By.id("LimitCalcHist_Limits_history")));
     }
 
     public void take_screenshot_limit_history(WebDriver adriver, ScreenshotVariables variables){

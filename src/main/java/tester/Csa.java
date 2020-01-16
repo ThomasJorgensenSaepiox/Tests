@@ -16,7 +16,7 @@ public class Csa {
     public void Navigate_to_csa(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!csa");
-        wait.until(presenceOfElementLocated(By.id("csa_list")));
+        wait.until(presenceOfElementLocated(By.id("Csa_Delete")));
     }
 
     public void take_screenshot_csa(WebDriver adriver, ScreenshotVariables variables){

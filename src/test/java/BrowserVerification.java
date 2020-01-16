@@ -2,6 +2,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import tester.*;
 
 import java.util.Optional;
@@ -55,15 +58,37 @@ public class BrowserVerification {
         xray.Navigate_to_x_ray(adriver, aVar);
         xray.take_screenshot_xray(adriver, aVar);
     }
-
+@Test
     public void Chrome() {
         TheMasterVariables variables = new TheMasterVariables("http://www.localhost:5000/","tj@saepiox.com","pass","chrome","Charles Ponzi",
                 "ASSET_MANAGER", Optional.of("C:\\Tests\\FileUpload1.exe"),Optional.of("C:\\Tests\\FileUpload2.exe"),Optional.of("anEmail@mail.com"),
                 Optional.of("@TerriblePass1"),Optional.of("Bad User"),"C:\\screenshots\\");
-        WebDriver driver = new ChromeDriver();
+        Session session = new Session();
+
+        WebDriver driver = new FirefoxDriver();
+        session.admin(driver, variables);
         generic_test(driver, variables);
-
-
     }
+@Test
+    public void Firefox() {
+        TheMasterVariables variables = new TheMasterVariables("http://www.localhost:5000/","tj@saepiox.com","pass","FireFox","Charles Ponzi",
+                "ASSET_MANAGER", Optional.of("C:\\Tests\\FileUpload1.exe"),Optional.of("C:\\Tests\\FileUpload2.exe"),Optional.of("anEmail@mail.com"),
+                Optional.of("@TerriblePass1"),Optional.of("Bad User"),"C:\\screenshots\\");
+    Session session = new Session();
 
+    WebDriver driver = new FirefoxDriver();
+    session.admin(driver, variables);
+        generic_test(driver, variables);
+    }
+    @Test
+    public void IE() {
+        TheMasterVariables variables = new TheMasterVariables("http://www.localhost:5000/","tj@saepiox.com","pass","IE","Charles Ponzi",
+                "ASSET_MANAGER", Optional.of("C:\\Tests\\FileUpload1.exe"),Optional.of("C:\\Tests\\FileUpload2.exe"),Optional.of("anEmail@mail.com"),
+                Optional.of("@TerriblePass1"),Optional.of("Bad User"),"C:\\screenshots\\");
+        Session session = new Session();
+
+        WebDriver driver = new InternetExplorerDriver();
+        session.admin(driver, variables);
+        generic_test(driver, variables);
+    }
 }

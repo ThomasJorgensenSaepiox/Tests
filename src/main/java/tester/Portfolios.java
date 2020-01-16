@@ -14,7 +14,7 @@ public class Portfolios {
     public void Navigate_to_portfolio(WebDriver adriver, PortfolioVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!portfolio-admin");
-        wait.until(presenceOfElementLocated(By.id("listParent")));
+        wait.until(presenceOfElementLocated(By.id("PortfolioAdmin_Cancel")));
     }
 
     public void take_screenshot_portfolio(WebDriver adriver,ScreenshotVariables variables){

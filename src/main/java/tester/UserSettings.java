@@ -17,7 +17,7 @@ public class UserSettings{
     public void Navigate_to_user_settings(WebDriver adriver, TheMasterVariables variables) {
         WebDriverWait wait = new WebDriverWait(adriver, 10);
         adriver.navigate().to(variables.getHost() + "#!user-settings");
-        wait.until(presenceOfElementLocated(By.id("dateStylePicker")));
+        wait.until(presenceOfElementLocated(By.id("UserSettings_DateTimeStylePicker")));
     }
 
     public void take_screenshot_user_settings(WebDriver adriver, ScreenshotVariables variables){
